@@ -1,4 +1,4 @@
-package com.excel.upload;
+package com.excel.upload.Models;
 
 
 import org.springframework.data.annotation.Id;
