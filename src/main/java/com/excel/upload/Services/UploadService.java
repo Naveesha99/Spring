@@ -5,6 +5,7 @@ import com.excel.upload.Repositories.UploadRepository;
 import com.excel.upload.Functions.UploadReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,8 +18,8 @@ public class UploadService {
     @Autowired
     private UploadReader uploadReader;
 
-    public void importData(String filepath) throws IOException {
-        List<UploadModel> models = uploadReader.readExcel(filepath);
+    public void importData(MultipartFile file) throws IOException {
+        List<UploadModel> models = uploadReader.readExcel(file);
         repository.saveAll(models);
     }
 }
