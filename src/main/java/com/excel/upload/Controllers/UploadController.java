@@ -1,5 +1,7 @@
 package com.excel.upload.Controllers;
 
+import com.excel.upload.Models.UploadLecturerModel;
+import com.excel.upload.Models.UploadModel;
 import com.excel.upload.Services.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 @RestController
@@ -20,14 +23,14 @@ public class UploadController {
     private UploadService service;
 
 
-    @ApiIgnore
-    @RequestMapping(value = "/")
-    public void redirect (HttpServletResponse response) throws IOException {
-        response.sendRedirect("swagger-ui.html");
-    }
+//    @ApiIgnore
+//    @RequestMapping(value = "/")
+//    public void redirect (HttpServletResponse response) throws IOException {
+//        response.sendRedirect("swagger-ui.html");
+//    }
 
 
-    @PostMapping("/import")
+    @PostMapping("/import/students")
     public String importData(@RequestParam("file") MultipartFile file) {
         try {
             service.importData(file);
@@ -35,5 +38,25 @@ public class UploadController {
         } catch (IOException e) {
             return "Failed to import data: " + e.getMessage();
         }
+    }
+
+    @PostMapping("/students")
+    public List<UploadModel> getAllUsers() {
+        return service.getAllData();
+    }
+
+    @PostMapping("/import/lecturers")
+    public String importLecturerData(@RequestParam("file") MultipartFile file) {
+        try {
+            service.importLecturerData(file);
+            return "Data imported successfully!";
+        } catch (IOException e) {
+            return "Failed to import data: " + e.getMessage();
+        }
+    }
+
+    @PostMapping("/lecturers")
+    public List<UploadLecturerModel> getAllLecturers() {
+        return service.getAllLecturerData();
     }
 }
